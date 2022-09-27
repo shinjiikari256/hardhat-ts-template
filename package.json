@@ -1,0 +1,25 @@
+{
+  "name": "hardhat-ts",
+  "license": "MIT",
+  "scripts": {
+    "gas": "TEST_GAS=true npx hardhat test",
+    "test": "npx hardhat test",
+    "test:gas": "GAS_REPORT=true npx hardhat test",
+    "test:c": "npx hardhat coverage",
+    "bc": "npx hardhat node",
+    "deploy": "npx hardhat run scripts/deploy.ts  --network localhost",
+    "deploy:test": "npx hardhat run scripts/deploy-goerli.ts  --network goerli",
+    "deploy:mainnet": "npx hardhat run scripts/deploy-mainnet.ts  --network mainnet",
+    "compile": "npx hardhat compile && npx hardhat typechain"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "hardhat": "^2.11.2",
+    "@openzeppelin/contracts": "^4.7.3",
+    "dotenv": "^16.0.2"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
+}
