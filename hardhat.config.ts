@@ -1,5 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+// import "@sebasgoldberg/hardhat-wsprovider";
 
 import { config as dotenvConfig } from "dotenv";
 import { resolve } from "path";
@@ -11,9 +12,9 @@ const {
   GOERLI_URL_NET = '',
   GOERLI_API_KEY = '',
   GOERLI_PRIVATE_KEY = '',
-  MAINNET_URL_NET = '',
-  MAINNET_API_KEY = '',
-  MAINNET_PRIVATE_KEY = '',
+  // MAINNET_URL_NET = '',
+  // MAINNET_API_KEY = '',
+  // MAINNET_PRIVATE_KEY = '',
   COINMARKETCAP_API_KEY = '',
   GAS_REPORT = false,
   TEST_GAS = false,
@@ -38,16 +39,15 @@ const config: HardhatUserConfig = {
   networks: {
     localhost: {
       url: "http://127.0.0.1:8545",
-      chainId: 1337,
     },
     goerli: {
       url: GOERLI_URL_NET + GOERLI_API_KEY,
       accounts: [GOERLI_PRIVATE_KEY],
     },
-    mainnet: {
-      url: MAINNET_URL_NET + MAINNET_API_KEY,
-      accounts: [MAINNET_PRIVATE_KEY],
-    },
+    // mainnet: {
+    //   url: MAINNET_URL_NET + MAINNET_API_KEY,
+    //   accounts: [MAINNET_PRIVATE_KEY],
+    // },
   },
 
   paths: {

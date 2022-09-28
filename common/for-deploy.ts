@@ -1,21 +1,32 @@
-import { artifacts, ethers } from 'hardhat';
+import { ethers } from 'hardhat';
 import fs from 'fs';
 import path from 'path';
 
-import type { Signer, Wallet, Contract, Tx, TxWait } from './types';
+import type { Signer, Wallet, Contract } from './types';
+
+interface NameWithType {
+  name: string;
+  type: string;
+}
+
+type ContractName = string | NameWithType;
+
+const deploy = async (contract: ContractName, deployer: Signer, ...args: any[]): Promise<Contract> => {
+  const { name, type } = typeof contract == 'string'
+    ? { name: contract, type: contract }
+    : contract
+
+  const contractFactory = await ethers.getContractFactory(type, deployer);
+  const _contract = await contractFactory.deploy(...args);
+  await _contract.deployed();
+
+  console.log(`${name} address:`, _contract.address);
+
+  return _contract
+}
 
 type DictContracts = {
   [key: string]: Contract;
-}
-
-const deploy = async (name: string, deployer: Signer, ...args: any[]) : Promise<Contract> => {
-  const contractFactory = await ethers.getContractFactory(name, deployer);
-  const contract = await contractFactory.deploy(...args);
-  await contract.deployed();
-
-  console.log(`${name} address: `, contract.address);
-
-  return contract
 }
 
 const saveFrontendFiles = (dir: string, contracts: DictContracts) : void => {
@@ -35,17 +46,16 @@ const saveFrontendFiles = (dir: string, contracts: DictContracts) : void => {
   }
 
   Object.entries(contracts).forEach((contract_item) => {
-    const [name, contract] = contract_item
+    const [name, contract] = contract_item;
 
     writeContract(name,
       { [name]: contract.address },
-      artifacts.readArtifactSync(name)
+      contract.interface
     )
   })
 }
 
 const addresses = (wallets: Signer[] | Wallet[]) => wallets.map((wallet) => wallet.address);
-
 
 const setDir4Front = (dirWithAbi: string = './forFront') => {
   const fromFront = (file: string) => require(dirWithAbi + file);
