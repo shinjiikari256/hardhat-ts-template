@@ -29,6 +29,12 @@ type DictContracts = {
   [key: string]: Contract;
 }
 
+const getAbi = (contract: Contract) => {
+  const raw_abi = contract.interface.format(ethers.utils.FormatTypes.json)
+  const abi = typeof raw_abi == 'string' ? raw_abi : raw_abi.join('')
+  return JSON.parse(abi)
+}
+
 const saveFrontendFiles = (dir: string, contracts: DictContracts) : void => {
   const contractsDir = path.join(__dirname, '/..', dir)
 
@@ -50,7 +56,7 @@ const saveFrontendFiles = (dir: string, contracts: DictContracts) : void => {
 
     writeContract(name,
       { [name]: contract.address },
-      contract.interface
+      { abi : getAbi(contract) }
     )
   })
 }
