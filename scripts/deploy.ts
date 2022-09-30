@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-import { saveFrontendFiles, deploy, deployerInfo } from '../common/for-deploy';
+import { saveFrontendFiles, deploy, deployerInfo, getNet } from '../common/for-deploy';
 
 async function main() {
   const signers = await ethers.getSigners()
@@ -10,15 +10,17 @@ async function main() {
 
   const FundsDisperser = await deploy("FundsDisperser", deployer);
   const DevToken = await deploy("DevToken", deployer);
-  const DevToken2 = await deploy({name: "DevToken2", type: "DevToken"}, deployer);
+  const DevToken2 = await deploy({ name: "DevToken2", type: "DevToken" }, deployer);
 
-  saveFrontendFiles(
-    // 'front/contracts',
-    'forFront',
-    {
-      FundsDisperser,
-      DevToken,
-      DevToken2
+  saveFrontendFiles({
+      // dir: '../front/contracts',
+      dir: 'forFront',
+      net: await getNet(),
+      contracts: {
+        FundsDisperser,
+        DevToken,
+        DevToken2,
+      }
     }
   )
 

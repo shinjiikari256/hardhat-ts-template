@@ -18,7 +18,7 @@ async function main() {
   const amounts = [1000, 2000, 1000, 2000]
 
   await DevToken.approve(FundsDisperser.address, tokenAmount);
-  await FundsDisperser.sendToTokens(DevToken.address, receivers, amounts);
+  await FundsDisperser.disperseTokens(DevToken.address, receivers, amounts);
 }
 
 main()
