@@ -57,8 +57,11 @@ const readJson = (name: string) => {
   const file = readFile(name)
   return file ? JSON.parse(file) : {}
 }
+const writeFile = (name: string, data: any) =>
+  fs.writeFileSync(name, data)
+
 const writeJson = (name: string, data: any) =>
-  fs.writeFileSync(name, JSON.stringify(data, null, 2))
+  writeFile(name, JSON.stringify(data, null, 2))
 
 const getContractAddresses = (name: string) =>
   readJson(name)?.address || {}
@@ -76,6 +79,12 @@ const writeContract2 = (dir: string, net: string) =>
     })
   }
 
+const createIndex = (names: string[]) => [
+    ...names.map((name: string) => `import ${name} from './${name}.json';`),
+    '',
+    `export { ${names.join(', ')} };`,
+  ].join('\n')
+
 const saveFrontendFiles = ({ dir = 'forFront', net = 'localhost', contracts }: ForContractsInfo) => {
   const contractsDir = path.join(__dirname, '/..', dir)
 
@@ -84,6 +93,10 @@ const saveFrontendFiles = ({ dir = 'forFront', net = 'localhost', contracts }: F
   const writeContract = writeContract2(contractsDir, net)
 
   Object.entries(contracts).forEach(writeContract)
+
+  const names = Object.keys(contracts)
+
+  writeFile(`${contractsDir}/index.js`, createIndex(names))
 }
 
 const setDir4Front = (dirWithAbi: string = './forFront', net: string = 'localhost') => {
