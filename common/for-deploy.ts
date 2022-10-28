@@ -64,7 +64,7 @@ const writeJson = (name: string, data: any) =>
   writeFile(name, JSON.stringify(data, null, 2))
 
 const getContractAddresses = (name: string) =>
-  readJson(name)?.address || {}
+  readJson(name)?.addresses || {}
 
 const writeContract2 = (dir: string, net: string) =>
   ([name, contract]: [string, Contract]) => {
