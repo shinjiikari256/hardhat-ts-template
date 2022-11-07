@@ -9,13 +9,21 @@ const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
 
 const {
+  PRIVATE_KEY = '',
+
   GOERLI_URL_NET = '',
   GOERLI_API_KEY = '',
-  GOERLI_PRIVATE_KEY = '',
-  // MAINNET_URL_NET = '',
-  // MAINNET_API_KEY = '',
-  // MAINNET_PRIVATE_KEY = '',
+
+  POLYGON_URL_NET = '',
+  POLYGON_API_KEY = '',
+
+  MAINNET_URL_NET = '',
+  MAINNET_API_KEY = '',
+
+  TEST_BSC_URL_NET = '',
+
   COINMARKETCAP_API_KEY = '',
+
   GAS_REPORT = false,
   TEST_GAS = false,
 } = process.env;
@@ -42,7 +50,15 @@ const config: HardhatUserConfig = {
     },
     goerli: {
       url: GOERLI_URL_NET + GOERLI_API_KEY,
-      accounts: [GOERLI_PRIVATE_KEY],
+      accounts: [PRIVATE_KEY],
+    },
+    testBsc: {
+      url: TEST_BSC_URL_NET,
+      accounts: [PRIVATE_KEY],
+    },
+    mumbai: {
+      url: POLYGON_URL_NET + POLYGON_API_KEY,
+      accounts: [PRIVATE_KEY],
     },
     // mainnet: {
     //   url: MAINNET_URL_NET + MAINNET_API_KEY,
