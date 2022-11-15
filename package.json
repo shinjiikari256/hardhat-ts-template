@@ -11,6 +11,7 @@
     "deploy:g": "npx hardhat run scripts/deploy-test.ts --network goerli",
     "deploy:b": "npx hardhat run scripts/deploy-test.ts --network testBsc",
     "deploy:m": "npx hardhat run scripts/deploy-test.ts --network mumbai",
+    "deploy:polygon": "npx hardhat run scripts/deploy-mainnet.ts --network polygon",
     "deploy:mainnet": "npx hardhat run scripts/deploy-mainnet.ts --network mainnet",
     "tx": "npx hardhat run scripts/send-tx.ts --network localhost",
     "compile": "npx hardhat compile && npx hardhat typechain"

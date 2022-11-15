@@ -14,13 +14,16 @@ const {
   GOERLI_URL_NET = '',
   GOERLI_API_KEY = '',
 
+  MUMBAI_URL_NET = '',
+  MUMBAI_API_KEY = '',
+
+  TEST_BSC_URL_NET = '',
+
   POLYGON_URL_NET = '',
   POLYGON_API_KEY = '',
 
   MAINNET_URL_NET = '',
   MAINNET_API_KEY = '',
-
-  TEST_BSC_URL_NET = '',
 
   COINMARKETCAP_API_KEY = '',
 
@@ -52,14 +55,18 @@ const config: HardhatUserConfig = {
       url: GOERLI_URL_NET + GOERLI_API_KEY,
       accounts: [PRIVATE_KEY],
     },
+    mumbai: {
+      url: MUMBAI_URL_NET + MUMBAI_API_KEY,
+      accounts: [PRIVATE_KEY],
+    },
     testBsc: {
       url: TEST_BSC_URL_NET,
       accounts: [PRIVATE_KEY],
     },
-    mumbai: {
-      url: POLYGON_URL_NET + POLYGON_API_KEY,
-      accounts: [PRIVATE_KEY],
-    },
+    // polygon: {
+    //   url: POLYGON_URL_NET + POLYGON_API_KEY,
+    //   accounts: [PRIVATE_KEY],
+    // },
     // mainnet: {
     //   url: MAINNET_URL_NET + MAINNET_API_KEY,
     //   accounts: [MAINNET_PRIVATE_KEY],
