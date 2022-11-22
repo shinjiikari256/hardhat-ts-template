@@ -64,16 +64,21 @@ const writeJson = (name: string, data: any) =>
   writeFile(name, JSON.stringify(data, null, 2))
 
 const getContractAddresses = (name: string) =>
-  readJson(name)?.addresses || {}
+  readJson(name)?.chains || {}
 
 const writeContract2 = (dir: string, net: string) =>
   ([name, contract]: [string, Contract]) => {
     const fileName = `${dir}/${name}.json`
+    const { hash, blockNumber } = contract.deployTransaction;
     writeJson(fileName, {
       name,
-      addresses: {
+      chains: {
         ...getContractAddresses(fileName),
-        [net]: contract.address,
+        [net]: {
+          address: contract.address,
+          deployBlock: blockNumber,
+          deployTxHash: hash,
+        },
       },
       abi: getAbi(contract),
     })
@@ -103,7 +108,7 @@ const setDir4Front = (dirWithAbi: string = './forFront', net: string = 'localhos
   const fromFront = (name: string) => readJson(`${dirWithAbi}/${name}.json`);
 
   return (name: string, provider: Signer) => {
-    const {addresses: {[net]: address}, abi } = fromFront(name);
+    const {chains: {[net]: address}, abi } = fromFront(name);
     return new ethers.Contract(address, abi, provider);
   }
 }
