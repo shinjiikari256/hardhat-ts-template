@@ -8,7 +8,6 @@
     "test:c": "hardhat coverage",
     "bc": "hardhat node",
     "deploy": "hardhat run scripts/deploy-local.ts --network localhost",
-
     "deploy:test": "hardhat run scripts/deploy-test.ts",
     "deploy:g": "yarn deploy:test --network goerli",
     "deploy:b": "yarn deploy:test --network testBsc",

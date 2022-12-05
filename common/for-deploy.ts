@@ -108,7 +108,7 @@ const setDir4Front = (dirWithAbi: string = './forFront', net: string = 'localhos
   const fromFront = (name: string) => readJson(`${dirWithAbi}/${name}.json`);
 
   return (name: string, provider: Signer) => {
-    const {chains: {[net]: address}, abi } = fromFront(name);
+    const {chains: {[net]: {address}}, abi } = fromFront(name);
     return new ethers.Contract(address, abi, provider);
   }
 }
