@@ -42,9 +42,8 @@ const deploy = async (contract: ContractName, deployer: Signer, ...args: any[]):
 }
 
 const getAbi = (contract: Contract) => {
-  const raw_abi = contract.interface.format(ethers.utils.FormatTypes.json)
-  const abi = typeof raw_abi == 'string' ? raw_abi : raw_abi.join('')
-  return JSON.parse(abi)
+  const abi = contract.interface.format(ethers.utils.FormatTypes.full)
+  return typeof abi == 'string' ? JSON.parse(abi) : abi
 }
 
 const createDir = (name: string) =>
